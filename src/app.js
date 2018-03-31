@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import ArticleList from './components/article-list'
 import Chart from './components/chart'
+import DayPicker from './components/day-picker'
 import UserForm from './components/user-form'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
@@ -19,6 +20,7 @@ class App extends Component {
 
         return (
             <div className="App">
+                <DayPicker />
                 <UserForm />
                 <Select options = {options} value = {this.state.selected} onChange = {this.handleSelectChange} multi/>
                 <Chart articles = {articles} />
