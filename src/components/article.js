@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import CommentList from './comment-list'
 
 class Article extends PureComponent {
     render() {
@@ -9,6 +10,7 @@ class Article extends PureComponent {
                 <h2>{article.title}</h2>
                 <button onClick = {() => toggleOpen(article.id)}>{isOpen ? 'close' : 'open'}</button>
                 {this.getBody()}
+                {article.comments ? <CommentList comments = {article.comments} /> : null}
             </div>
         )
     }
