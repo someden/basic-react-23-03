@@ -1,9 +1,21 @@
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import CommentList from '../comment-list'
 import CSSTransition from 'react-addons-css-transition-group'
 import './style.css'
 
 class Article extends PureComponent {
+    static propTypes = {
+        article: PropTypes.shape({
+            id: PropTypes.string,
+            title: PropTypes.string,
+            text: PropTypes.string,
+            comments: PropTypes.array
+        }),
+        isOpen: PropTypes.bool,
+        toggleOpen: PropTypes.func
+    }
+
     state = {
         error: null
     }
