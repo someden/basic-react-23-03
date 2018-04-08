@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import moment from 'moment'
 //import {findDOMNode} from 'react-dom'
 import Article from '../article'
 import accordion from '../../decorators/accordion'
@@ -45,6 +46,24 @@ export class ArticleList extends Component {
     }
 }
 
+const getFilteredArticles = (articles, { selectedArticles, dateRange }) => {
+    const filterBySelected = selectedArticles.length
+        ? (article) => selectedArticles.includes(article.id)
+        : () => true
+
+    const from = moment(dateRange.from).startOf('day')
+    const to = moment(dateRange.to).endOf('day')
+
+    const filterByDateRange = from.isValid() && to.isValid()
+        ? (article) => {
+            const date = moment(article.date)
+            return date.isSameOrAfter(from) && date.isSameOrBefore(to)
+        }
+        : () => true
+
+    return articles.filter(article => filterBySelected(article) && filterByDateRange(article))
+}
+
 export default connect(state => ({
-    articles: state.articles
+    articles: getFilteredArticles(state.articles, state.filters),
 }))(accordion(ArticleList))
