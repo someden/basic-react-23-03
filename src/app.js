@@ -10,7 +10,7 @@ class App extends Component {
             <div className="App">
                 <UserForm />
                 <Counter count = {10}/>
-                <Filters articles = {[]} />
+                <Filters />
                 <ArticleList />
             </div>
         )
