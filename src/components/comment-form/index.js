@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { addComment } from '../../ac'
 
 class CommentForm extends Component {
     static propTypes = {
@@ -37,4 +38,4 @@ class CommentForm extends Component {
     }
 }
 
-export default connect(null, { onSubmit: () => {} })(CommentForm)
+export default connect(null, { onSubmit: addComment })(CommentForm)
