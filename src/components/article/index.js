@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import CommentList from '../comment-list'
+import CommentForm from '../comment-form'
 import CSSTransition from 'react-addons-css-transition-group'
 import { deleteArticle } from '../../ac'
 import './style.css'
@@ -55,6 +56,7 @@ class Article extends PureComponent {
             <section className = "test--article__body">
                 {article.text}
                 <CommentList comments={article.comments}/>
+                <CommentForm articleId={article.id}/>
             </section>
         )
     }
