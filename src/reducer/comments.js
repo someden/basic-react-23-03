@@ -1,5 +1,5 @@
 import { Record } from 'immutable'
-import { ADD_COMMENT, LOAD_ALL_COMMENTS, START, SUCCESS } from '../constants'
+import { ADD_COMMENT, LOAD_COMMENTS, START, SUCCESS } from '../constants'
 import { arrToMap } from './utils'
 
 const CommentRecord = Record({
@@ -24,10 +24,10 @@ export default (state = ReducerRecord(), action) => {
                 id: randomId
             })
 
-        case LOAD_ALL_COMMENTS + START:
+        case LOAD_COMMENTS + START:
             return state.set('loading', true)
 
-        case LOAD_ALL_COMMENTS + SUCCESS:
+        case LOAD_COMMENTS + SUCCESS:
             return state
                 .update('entities', entities => entities.merge(arrToMap(payload.response, CommentRecord)))
                 .set('loading', false)

@@ -6,7 +6,7 @@ import Comment from '../comment'
 import CommentForm from '../comment-form'
 import toggleOpen from '../../decorators/toggleOpen'
 import { commentsLoadingSelector, commentsLoadedForArticlesSelector } from '../../selectors'
-import { loadAllComments } from '../../ac'
+import { loadCommentsByArticleId } from '../../ac'
 import Loader from '../common/loader'
 import './style.css'
 
@@ -15,19 +15,19 @@ class CommentList extends Component {
         article: PropTypes.object.isRequired,
         loading: PropTypes.bool.isRequired,
         loadedForArticles: PropTypes.array.isRequired,
-        loadAllComments: PropTypes.func.isRequired,
+        loadCommentsByArticleId: PropTypes.func.isRequired,
         //from toggleOpen decorator
         isOpen: PropTypes.bool,
         toggleOpen: PropTypes.func
     }
 
-    componentWillReceiveProps({ article: { comments = [], id }, isOpen, loadAllComments, loadedForArticles }) {
+    componentWillReceiveProps({ article: { comments = [], id }, isOpen, loadCommentsByArticleId, loadedForArticles }) {
         if (
             comments.length &&
             !this.props.isOpen &&
             isOpen &&
             !loadedForArticles.includes(id)
-        ) loadAllComments(id)
+        ) loadCommentsByArticleId(id)
     }
 
     render() {
@@ -84,4 +84,4 @@ class CommentList extends Component {
 export default connect(state => ({
     loading: commentsLoadingSelector(state),
     loadedForArticles: commentsLoadedForArticlesSelector(state)
-}), { loadAllComments })(toggleOpen(CommentList))
+}), { loadCommentsByArticleId })(toggleOpen(CommentList))
