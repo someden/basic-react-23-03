@@ -1,17 +1,33 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import CSSTransition from 'react-addons-css-transition-group'
 import Comment from '../comment'
 import CommentForm from '../comment-form'
 import toggleOpen from '../../decorators/toggleOpen'
+import { commentsLoadingSelector, commentsLoadedForArticlesSelector } from '../../selectors'
+import { loadAllComments } from '../../ac'
+import Loader from '../common/loader'
 import './style.css'
 
 class CommentList extends Component {
     static propTypes = {
         article: PropTypes.object.isRequired,
+        loading: PropTypes.bool.isRequired,
+        loadedForArticles: PropTypes.array.isRequired,
+        loadAllComments: PropTypes.func.isRequired,
         //from toggleOpen decorator
         isOpen: PropTypes.bool,
         toggleOpen: PropTypes.func
+    }
+
+    componentWillReceiveProps({ article: { comments = [], id }, isOpen, loadAllComments, loadedForArticles }) {
+        if (
+            comments.length &&
+            !this.props.isOpen &&
+            isOpen &&
+            !loadedForArticles.includes(id)
+        ) loadAllComments(id)
     }
 
     render() {
@@ -48,10 +64,14 @@ class CommentList extends Component {
     }
 
     getComments() {
+        const {article, loading, loadedForArticles} = this.props
+        if (loading) return <Loader />
+        if (!loadedForArticles.includes(article.id)) return null
+
         return (
             <ul>
                 {
-                    this.props.article.comments.map(id =>
+                    article.comments.map(id =>
                         <li key = {id} className = "test__comment-list--item">
                             <Comment id = {id}/>
                         </li>)
@@ -61,5 +81,7 @@ class CommentList extends Component {
     }
 }
 
-
-export default toggleOpen(CommentList)
+export default connect(state => ({
+    loading: commentsLoadingSelector(state),
+    loadedForArticles: commentsLoadedForArticlesSelector(state)
+}), { loadAllComments })(toggleOpen(CommentList))
