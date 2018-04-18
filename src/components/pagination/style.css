@@ -1,0 +1,7 @@
+.page-link {
+    margin: 0 1em;
+}
+
+.page-link.active {
+    color: red;
+}
