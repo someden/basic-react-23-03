@@ -49,4 +49,4 @@ export default connect((state, props) => {
         loading: commentsPageLoadingSelector(state, props),
         comments: commentsPageIdsSelector(state, props)
     }
-}, { checkAndLoadCommentsForPage })(CommentsPagination)
+}, { checkAndLoadCommentsForPage }, null, { pure: false })(CommentsPagination)

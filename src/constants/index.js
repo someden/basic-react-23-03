@@ -11,6 +11,8 @@ export const CHANGE_DATE_RANGE = 'CHANGE_DATE_RANGE'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const LOAD_COMMENTS_FOR_PAGE = 'LOAD_COMMENTS_FOR_PAGE'
 
+export const SELECT_LANGUAGE = 'SELECT_LANGUAGE'
+
 export const START = '_START'
 export const SUCCESS = '_SUCCESS'
 export const FAIL = '_FAIL'

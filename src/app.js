@@ -7,11 +7,16 @@ import UserForm from './components/user-form'
 import Filters from './components/filters'
 import Counter from './components/counter'
 import Menu, { MenuItem } from './components/menu'
+import LanguageSwitch from './components/localization/languageSwitch'
 
 class App extends Component {
     static childContextTypes = {
         username: PropTypes.string,
         store: PropTypes.object
+    }
+
+    static contextTypes = {
+        l10n: PropTypes.object
     }
 
     state = {
@@ -27,14 +32,17 @@ class App extends Component {
     onUserChange = (user) => this.setState({ user })
 
     render() {
+        const { l10n } = this.context
         console.log('---', 1)
         return (
             <div className="App">
+                <LanguageSwitch />
+
                 <Menu>
-                    <MenuItem to = "/counter">counter</MenuItem>
-                    <MenuItem to = "/filters">filters</MenuItem>
-                    <MenuItem to = "/articles">articles</MenuItem>
-                    <MenuItem to = "/comments">comments</MenuItem>
+                    <MenuItem to = "/counter">{l10n.counter}</MenuItem>
+                    <MenuItem to = "/filters">{l10n.filters}</MenuItem>
+                    <MenuItem to = "/articles">{l10n.articles}</MenuItem>
+                    <MenuItem to = "/comments">{l10n.comments}</MenuItem>
                 </Menu>
 
                 <UserForm value = {this.state.user} onChange = {this.onUserChange}/>
@@ -43,10 +51,10 @@ class App extends Component {
                     <Redirect exact from = "/" to = "/articles" />
                     <Route path = "/counter" component = {Counter} exact />
                     <Route path = "/filters" component = {Filters}/>
-                    <Route path = "/articles/new" render = {() => <h1>New article page</h1>} />
+                    <Route path = "/articles/new" render = {() => <h1>{l10n.newArticlePage}</h1>} />
                     <Route path = "/articles" component = {ArticleList} />
                     <Route path = "/comments" component = {CommentsPage} />
-                    <Route path = "*" render = {() => <h1>Not found page</h1>} />
+                    <Route path = "*" render = {() => <h1>{l10n.notFoundPage}</h1>} />
                 </Switch>
             </div>
         )

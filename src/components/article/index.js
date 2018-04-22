@@ -9,6 +9,10 @@ import { articleSelector } from '../../selectors'
 import './style.css'
 
 class Article extends Component {
+    static contextTypes = {
+        l10n: PropTypes.object
+    }
+
     state = {
         error: null
     }
@@ -24,6 +28,7 @@ class Article extends Component {
 
     render() {
         const { article, isOpen, toggleOpen } = this.props
+        const { l10n } = this.context
         if (!article) return null
         console.log('---', 3)
 
@@ -33,9 +38,9 @@ class Article extends Component {
                 <button className = "test--article__btn"
                         onClick = {() => toggleOpen(article.id)}
                 >
-                    {isOpen ? 'close' : 'open'}
+                    {isOpen ? l10n.close : l10n.open}
                 </button>
-                <button onClick = {this.handleDelete}>delete me</button>
+                <button onClick = {this.handleDelete}>{l10n.delete}</button>
                 <CSSTransition
                     transitionName = "article"
                     transitionEnterTimeout = {500}
@@ -57,7 +62,7 @@ class Article extends Component {
 
     getBody() {
         const { article, isOpen } = this.props
-        if (this.state.error) return <h2>Some error</h2>
+        if (this.state.error) return <h2>{this.context.l10n.someError}</h2>
         if (!isOpen) return null
 
         if (article.loading) return <Loader />

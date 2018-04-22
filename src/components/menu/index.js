@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import MenuItem from './menu-item'
 
 class Menu extends Component {
@@ -6,10 +7,15 @@ class Menu extends Component {
 
     }
 
+    static contextTypes = {
+        l10n: PropTypes.object
+    }
+
     render() {
+        const { l10n } = this.context
         return (
             <div>
-                <h3>Main menu:</h3>
+                <h3>{l10n.mainMenu}:</h3>
                 {this.props.children}
             </div>
         )

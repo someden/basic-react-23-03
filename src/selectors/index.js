@@ -35,3 +35,5 @@ export const commentsPageIdsSelector = createSelector(commentsPagenationSelector
 export const commentsPageLoadingSelector = createSelector(commentsPagenationSelector, pageSelector,
     (pagination, page) => pagination.getIn([page, 'loading'])
 )
+
+export const languageSelector = state => state.language

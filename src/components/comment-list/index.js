@@ -7,6 +7,7 @@ import CommentForm from '../comment-form'
 import Loader from '../common/loader'
 import toggleOpen from '../../decorators/toggleOpen'
 import {loadArticleComments} from '../../ac'
+import { languageSelector } from '../../selectors'
 import './style.css'
 
 class CommentList extends Component {
@@ -19,6 +20,7 @@ class CommentList extends Component {
 
     static contextTypes = {
         username: PropTypes.string,
+        l10n: PropTypes.object
     }
 
     componentWillReceiveProps({ isOpen, article, loadArticleComments }) {
@@ -29,7 +31,8 @@ class CommentList extends Component {
 
     render() {
         const {isOpen, toggleOpen} = this.props
-        const text = isOpen ? 'hide comments' : 'show comments'
+        const { l10n } = this.context
+        const text = isOpen ? l10n.hideComments : l10n.showComments
         console.log('---', 4)
         return (
             <div>
@@ -47,6 +50,7 @@ class CommentList extends Component {
 
     getBody() {
         const {article: { comments, id, commentsLoading, commentsLoaded }, isOpen} = this.props
+        const { l10n } = this.context
         if (!isOpen) return null
         if (commentsLoading) return <Loader />
         if (!commentsLoaded) return null
@@ -57,7 +61,7 @@ class CommentList extends Component {
                 {
                     comments.length
                         ? this.getComments()
-                        : <h3 className="test__comment-list--empty">No comments yet</h3>
+                        : <h3 className="test__comment-list--empty">{l10n.noComments}</h3>
                 }
                 <CommentForm articleId = {id} />
             </div>
@@ -79,4 +83,6 @@ class CommentList extends Component {
 }
 
 
-export default connect(null, { loadArticleComments }, null, { pure: false })(toggleOpen(CommentList))
+export default connect(state => ({
+    language: languageSelector(state),
+}), { loadArticleComments })(toggleOpen(CommentList))

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import ArticleList from '../article-list'
 import Article from '../article'
@@ -6,6 +7,10 @@ import Article from '../article'
 class ArticlesPage extends Component {
     static propTypes = {
 
+    }
+
+    static contextTypes = {
+        l10n: PropTypes.object
     }
 
     render() {
@@ -19,7 +24,7 @@ class ArticlesPage extends Component {
     }
 
     getArticle = ({ match }) => {
-        if (!match) return <h1>Select an article</h1>
+        if (!match) return <h1>{this.context.l10n.selectAnArticle}</h1>
         return <Article id = {match.params.id} isOpen key = {match.params.id} />
     }
 }

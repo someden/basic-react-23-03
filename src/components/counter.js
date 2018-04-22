@@ -9,11 +9,16 @@ class Counter extends Component {
         handleIncrement: PropTypes.func
     }
 
+    static contextTypes = {
+        l10n: PropTypes.object
+    }
+
     render() {
+        const { l10n } = this.context
         return (
             <div>
                 <h2>{this.props.count}</h2>
-                <button onClick = {this.handleIncrement}>increment me</button>
+                <button onClick = {this.handleIncrement}>{l10n.increment}</button>
             </div>
         )
     }

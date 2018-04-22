@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { createCommentSelector } from '../selectors'
+import { createCommentSelector, languageSelector } from '../selectors'
 
-function Comment({comment}) {
+function Comment({comment}, {l10n}) {
     return (
         <div>
-            {comment.text} <b>by {comment.user}</b>
+            {comment.text} <b>{l10n.by} {comment.user}</b>
         </div>
     )
 }
@@ -20,10 +20,15 @@ Comment.propTypes = {
     }).isRequired
 }
 
+Comment.contextTypes = {
+    l10n: PropTypes.object
+}
+
 const createMapStateToProps = () => {
     const commentSelector = createCommentSelector()
 
     return (state, ownProps) => ({
+        language: languageSelector(state),
         comment: commentSelector(state, ownProps)
     })
 }

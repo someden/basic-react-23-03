@@ -1,8 +1,15 @@
 import {
     INCREMENT, DELETE_ARTICLE, CHANGE_DATE_RANGE, CHANGE_SELECTION, ADD_COMMENT,
-    LOAD_ALL_ARTICLES, LOAD_ARTICLE, LOAD_ARTICLE_COMMENTS, LOAD_COMMENTS_FOR_PAGE, START, SUCCESS, FAIL
+    LOAD_ALL_ARTICLES, LOAD_ARTICLE, LOAD_ARTICLE_COMMENTS, LOAD_COMMENTS_FOR_PAGE, SELECT_LANGUAGE, START, SUCCESS, FAIL
 } from '../constants'
 import { push, replace } from 'react-router-redux'
+
+export function selectLanguage(language) {
+    return {
+        type: SELECT_LANGUAGE,
+        payload: { language }
+    }
+}
 
 export function increment() {
     return {
